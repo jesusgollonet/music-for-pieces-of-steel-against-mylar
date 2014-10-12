@@ -13,15 +13,25 @@ n.play(y);
 n.play(h);
 
 (
-f = [0.5, 0.5, 1,0.5, 1.0,1.0,0.5,1.0] * 0.35;
+f = [1,1,1,0,1,1,0,1,0,1,1,0];
+g = [0,1,0,1,1,0,1,1,1,0,1,1];
 
 Routine{
 	inf.do{|i|
-		i.postln;
-		if(i%2==0,{n.play(y)}
-			, {n.play(h)});
-		(f[i%f.size]).wait;
+		if (f[i%f.size] ==1,{
+				n.play(y);
+		});
+		if (i>(12*4),{
+			if (g[i%g.size] ==1,{
+				n.play(h);
+			});
+		});
+
+
+
+		(0.3 * 0.5).wait;
 	}
 
 }.play;
+
 )
