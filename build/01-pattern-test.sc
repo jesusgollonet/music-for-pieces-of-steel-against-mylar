@@ -1,12 +1,12 @@
 
 
 (
-SynthDef("pbf", { |out = 0, bufnum = 0, rate = 1, amp = 0.5|
+SynthDef("pbf", { |out = 0, bufnum = 0, rate = 1, amp = 0.5, pan = 0|
 	var player, ratio, panned;
 	ratio = BufRateScale.kr(bufnum) * rate;
 	player = PlayBuf.ar(1, bufnum, ratio, doneAction:2);
-	panned =  Pan2.ar(player , level:amp);
-    Out.ar(out, panned);
+	panned =  Pan2.ar(player , pan,  level:amp);
+    Out.ar(0, panned);
 }).add;
 )
 (
@@ -15,11 +15,38 @@ b = JGBUtil.dirToBuffers("/Users/jesusgollonet/Documents/projects/music-for-piec
 (
 
 f = [1,1,1,0,1,1,0,1,0,1,1,0];
+g = f.rotate(1);
+h = f.rotate(2);
 
 p = Pbind(
     \instrument, \pbf,
     \buffer, \k1p,
     \dur, 0.15,
+    \pan, -1,
     \amp, Pseq(f,inf)
-).play;
+);
+
+q = Pbind(
+    \instrument, \pbf,
+    \buffer, \k1r,
+    \dur, 0.15,
+    \pan, 0,
+    \amp, Pseq(g,inf)
+);
+
+r = Pbind(
+    \instrument, \pbf,
+    \buffer, \clamp,
+    \dur, 0.15,
+    \pan, 1,
+    \amp, Pseq(h,inf)
+);
+
+
+Ptpar([
+    0.0, p,
+    12*4 * 0.15, q,
+    12 * 8 * 0.15,r
+]).play;
+
 )
