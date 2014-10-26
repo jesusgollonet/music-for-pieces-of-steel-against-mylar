@@ -36,7 +36,8 @@ orders
 
 // main pattern
 f = [1,1,1,0,1,1,0,1,0,1,1,0];
-g = f.rotate(6);
+g = f.rotate(1);
+h = f.rotate(2);
 
 Routine{
 	inf.do{|i|
@@ -46,6 +47,11 @@ Routine{
 		if (i>(12*4),{
 			if (g[i%g.size] ==1,{
 				n.play(y);
+			});
+		});
+		if (i>(12*8),{
+			if (h[i%h.size] ==1,{
+				n.play(k);
 			});
 		});
 
