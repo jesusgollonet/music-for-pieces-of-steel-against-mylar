@@ -18,26 +18,29 @@ f = [1,1,1,0,1,1,0,1,0,1,1,0];
 g = f.rotate(1);
 h = f.rotate(2);
 
-p = Pbind(
+// all patterns 'inherit' from this one
+~basePbind = Pbind(
     \instrument, \pbf,
-    \buffer, \k1p,
     \dur, 0.15,
+);
+
+p = Pbindf(
+    ~basePbind,
+    \bufnum, b.at(\clamp),
     \pan, -1,
     \amp, Pseq(f,inf)
 );
 
-q = Pbind(
-    \instrument, \pbf,
-    \buffer, \k1r,
-    \dur, 0.15,
+q = Pbindf(
+    ~basePbind,
+    \bufnum, b.at(\k1r),
     \pan, 0,
     \amp, Pseq(g,inf)
 );
 
-r = Pbind(
-    \instrument, \pbf,
-    \buffer, \clamp,
-    \dur, 0.15,
+r = Pbindf(
+    ~basePbind,
+    \bufnum, b.at(\k1p),
     \pan, 1,
     \amp, Pseq(h,inf)
 );
