@@ -17,7 +17,7 @@ b = JGBUtil.dirToBuffers("/Users/jgb/Documents/projects/music-for-pieces-of-stee
 
 f = [1,1,1,0,1,1,0,1,0,1,1,0];
 g = f.rotate(1);
-h = f.rotate(6) - [1,1,1,1,0,0,1,1,1,1,0,0];
+h = f.rotate(2);
 
 // all patterns 'inherit' from this one
 ~basePbind = Pbind(
