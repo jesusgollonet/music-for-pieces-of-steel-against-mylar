@@ -10,8 +10,9 @@ s.boot
 
 ~env.count = 0;
 ~env.seedPattern =[1,1,1,0,1,1,0,1,0,1,1,0];
-~env.justNotes = all{:y, y<-(0..(~env.seedPattern.size)),~env.seedPattern[y]== 1};
-
+~env.justNotes = all{:y, y<-(0..(~env.seedPattern.size)),~env.seedPattern[y]== 1}.scramble;
+~env.currentAccumulatedPattern = 0 ! ~env.seedPattern.size;
+~env.currentAccumulatedPattern.postln;
 Penvir(~env,
 	Pbind(
 		\instrument, \pbf,
@@ -19,17 +20,12 @@ Penvir(~env,
 		\bufnum, Pseq([b.at(\clamp)],inf),
 		\pan, Pseq([-0.5,0.5],inf),
 		\amp, Pn(Plazy({
-			var ar = ~seedPattern.collect({|item,i|
-				if (i <= ~justNotes[~count],{
-					~seedPattern[i];
-				},{
-					0
-				});
-			});
-			ar.postln;
+			var currentIndex = ~justNotes[~count];
+			~currentAccumulatedPattern[currentIndex] = ~seedPattern[currentIndex];
+			~currentAccumulatedPattern.postln;
 			~count = ~count + 1;
 			~count = ~count % ~justNotes.size;
-			Pn(Pseq(ar,1),4);
+			Pn(Pseq(~currentAccumulatedPattern,1),4);
 		}) * 0.1,inf);
 	)
 ).play(quant:1);
