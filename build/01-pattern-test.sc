@@ -1,4 +1,5 @@
 
+s.boot
 
 (
 SynthDef("pbf", { |out = 0, bufnum = 0, rate = 1, amp = 0.5, pan = 0|
@@ -10,18 +11,18 @@ SynthDef("pbf", { |out = 0, bufnum = 0, rate = 1, amp = 0.5, pan = 0|
 }).add;
 )
 (
-b = JGBUtil.dirToBuffers("/Users/jesusgollonet/Documents/projects/music-for-pieces-of-steel-against-mylar/dev/build/samples/",s);
+b = JGBUtil.dirToBuffers("/Users/jgb/Documents/projects/music-for-pieces-of-steel-against-mylar/dev/build/samples/",s);
 )
 (
 
 f = [1,1,1,0,1,1,0,1,0,1,1,0];
 g = f.rotate(1);
-h = f.rotate(2);
+h = f.rotate(6) - [1,1,1,1,0,0,1,1,1,1,0,0];
 
 // all patterns 'inherit' from this one
 ~basePbind = Pbind(
     \instrument, \pbf,
-    \dur, 0.15,
+    \dur, 0.15
 );
 
 p = Pbindf(
