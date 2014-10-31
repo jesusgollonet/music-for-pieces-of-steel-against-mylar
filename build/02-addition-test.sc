@@ -6,12 +6,16 @@ s.boot
 
 (
 
-TempoClock.default.tempo = 360/60;
+~basePattern = [1,1,1,0,1,1,0,1,0,1,1,0];
+// ~basePattern = [1,1,0,1,0,1,1,0];
+// ~basePattern = [1,1,0,1,1,0];
+
+TempoClock.default.tempo = 400/60;
 
 ~player3 = ~player3 ? ();
 
 ~player3.count = 0;
-~player3.seedPattern =[1,1,1,0,1,1,0,1,0,1,1,0];
+~player3.seedPattern =~basePattern;
 ~player3.hitPositions = all{:y, y<-(0..(~player3.seedPattern.size)),~player3.seedPattern[y]== 1}.scramble;
 ~player3.currentAccumulatedPattern = 0 ! ~player3.seedPattern.size;
 
@@ -41,7 +45,7 @@ TempoClock.default.tempo = 360/60;
 ~player4 = ~player4 ? ();
 
 ~player4.count = 0;
-~player4.seedPattern =[1,1,1,0,1,1,0,1,0,1,1,0];
+~player4.seedPattern =~basePattern;
 ~player4.hitPositions = all{:y, y<-(0..(~player3.seedPattern.size)),~player3.seedPattern[y]== 1}.scramble;
 ~player4.currentAccumulatedPattern = 0 ! ~player3.seedPattern.size;
 
@@ -50,7 +54,7 @@ TempoClock.default.tempo = 360/60;
 	Pbind(
 		\instrument, \pbf,
 		\dur, 1,
-		\bufnum, Pseq([b.at(\clamp)],inf),
+		\bufnum, Pseq([b.at(\k1r)],inf),
 		\pan, -0.5,
 		\amp, Pn(Plazy({
 			/*
@@ -67,7 +71,7 @@ TempoClock.default.tempo = 360/60;
 );
 
 
-f = [1,1,1,0,1,1,0,1,0,1,1,0];
+f = ~basePattern;
 
 // all patterns 'inherit' from this one
 ~basePbind = Pbind(
@@ -78,6 +82,7 @@ f = [1,1,1,0,1,1,0,1,0,1,1,0];
 p = Pbindf(
     ~basePbind,
 	\bufnum, Pseq([b.at(\k)],inf),
+	\rate, 2,
     \pan, 0,
     \amp, Pseq(f,inf) * 0.1
 );
