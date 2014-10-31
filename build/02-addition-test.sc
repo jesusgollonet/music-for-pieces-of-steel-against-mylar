@@ -6,25 +6,31 @@ s.boot
 
 (
 
-~env = ~env ? ();
+TempoClock.default.tempo = 360/60;
 
-~env.count = 0;
-~env.seedPattern =[1,1,1,0,1,1,0,1,0,1,1,0];
-~env.justNotes = all{:y, y<-(0..(~env.seedPattern.size)),~env.seedPattern[y]== 1}.scramble;
-~env.currentAccumulatedPattern = 0 ! ~env.seedPattern.size;
-~env.currentAccumulatedPattern.postln;
-Penvir(~env,
+~player3 = ~player3 ? ();
+
+~player3.count = 0;
+~player3.seedPattern =[1,1,1,0,1,1,0,1,0,1,1,0];
+~player3.hitPositions = all{:y, y<-(0..(~player3.seedPattern.size)),~player3.seedPattern[y]== 1};
+~player3.currentAccumulatedPattern = 0 ! ~player3.seedPattern.size;
+
+
+Penvir(~player3,
 	Pbind(
 		\instrument, \pbf,
-		\dur, 0.15,
+		\dur, 1,
 		\bufnum, Pseq([b.at(\clamp)],inf),
 		\pan, Pseq([-0.5,0.5],inf),
 		\amp, Pn(Plazy({
-			var currentIndex = ~justNotes[~count];
+			/*
+			Every 4 bars, we add a new note to the pattern until we have the 8 of them
+			*/
+			var currentIndex = ~hitPositions[~count];
 			~currentAccumulatedPattern[currentIndex] = ~seedPattern[currentIndex];
 			~currentAccumulatedPattern.postln;
 			~count = ~count + 1;
-			~count = ~count % ~justNotes.size;
+			~count = ~count % ~hitPositions.size;
 			Pn(Pseq(~currentAccumulatedPattern,1),4);
 		}) * 0.1,inf);
 	)
@@ -38,7 +44,7 @@ h = f.rotate(2);
 // all patterns 'inherit' from this one
 ~basePbind = Pbind(
     \instrument, \pbf,
-    \dur, 0.15
+    \dur, 1
 );
 
 p = Pbindf(
@@ -46,7 +52,7 @@ p = Pbindf(
 	\bufnum, Pseq([b.at(\k1r), b.at(\k1p)],inf),
     \pan, 0,
     \amp, Pseq(f,inf) * 0.1
-).play(quant:1);
+).play(quant:2);
 
 
 )
