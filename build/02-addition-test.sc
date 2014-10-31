@@ -88,8 +88,10 @@ p = Pbindf(
 );
 
 
-Ppar([
-	~player3Penvir, ~player4Penvir, p
+Ptpar([
+	0,p,
+	12 * 4, ~player3Penvir,
+	12 * 4 + 12 * 8, ~player4Penvir,
 ]).play;
 
 )
