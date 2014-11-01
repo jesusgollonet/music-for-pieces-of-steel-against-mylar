@@ -25,7 +25,7 @@ TempoClock.default.tempo = 400/60;
 		\instrument, \pbf,
 		\dur, 1,
 		\rate, 0.8,
-		\bufnum, Pseq([b.at(\clamp)],inf),
+		\bufnum, Pseq([b.at(\tams0), b.at(\tams1),b.at(\tams2),b.at(\tams3),b.at(\tams0),b.at(\tams1)],inf),
 		\pan, 0.5,
 		\amp, Pn(Plazy({
 			/*
@@ -54,7 +54,7 @@ TempoClock.default.tempo = 400/60;
 	Pbind(
 		\instrument, \pbf,
 		\dur, 1,
-		\bufnum, Pseq([b.at(\k1r)],inf),
+		\bufnum, Pseq([b.at(\k1p)],inf),
 		\pan, -0.5,
 		\amp, Pn(Plazy({
 			/*
@@ -81,8 +81,8 @@ f = ~basePattern;
 
 p = Pbindf(
     ~basePbind,
-	\bufnum, Pseq([b.at(\k)],inf),
-	\rate, 2,
+	\bufnum, Pseq([b.at(\facemusic0),b.at(\facemusic1), b.at(\facemusic2), b.at(\facemusic3),b.at(\facemusic1),b.at(\facemusic2)],inf),
+	\rate, 1,
     \pan, 0,
     \amp, Pseq(f,inf) * 0.1
 );
