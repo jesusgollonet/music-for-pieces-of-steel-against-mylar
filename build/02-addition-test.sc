@@ -25,7 +25,7 @@ TempoClock.default.tempo = 400/60;
 		\instrument, \pbf,
 		\dur, 1,
 		\rate, 0.8,
-		\bufnum, Pseq([b.at(\tams0), b.at(\tams1),b.at(\tams2),b.at(\tams3),b.at(\tams0),b.at(\tams1)],inf),
+		\bufnum, Pxrand([b.at(\fdv0), b.at(\fdv1),b.at(\fdv2),b.at(\fdv3),b.at(\fdv4),b.at(\fdv5)],inf),
 		\pan, 0.5,
 		\amp, Pn(Plazy({
 			/*
@@ -54,8 +54,9 @@ TempoClock.default.tempo = 400/60;
 	Pbind(
 		\instrument, \pbf,
 		\dur, 1,
-		\bufnum, Pseq([b.at(\k1p)],inf),
+		\bufnum, Pxrand([b.at(\fastson0),b.at(\fastson1),b.at(\fastson2),b.at(\fastson3),b.at(\fastson4)],inf),
 		\pan, -0.5,
+		\rate, 0.8,
 		\amp, Pn(Plazy({
 			/*
 			Every 4 bars, we add a new note to the pattern until we have the 8 of them
@@ -66,9 +67,10 @@ TempoClock.default.tempo = 400/60;
 			~count = ~count + 1;
 			~count = ~count % ~hitPositions.size;
 			Pn(Pseq(~currentAccumulatedPattern,1),4);
-		}) * 0.1,inf);
+		}) * 0.25,inf);
 	)
 );
+
 
 
 f = ~basePattern;
@@ -81,7 +83,7 @@ f = ~basePattern;
 
 p = Pbindf(
     ~basePbind,
-	\bufnum, Pseq([b.at(\facemusic0),b.at(\facemusic1), b.at(\facemusic2), b.at(\facemusic3),b.at(\facemusic1),b.at(\facemusic2)],inf),
+	\bufnum, Pxrand([b.at(\facemusic0),b.at(\facemusic1), b.at(\facemusic2), b.at(\facemusic3)],inf),
 	\rate, 1,
     \pan, 0,
     \amp, Pseq(f,inf) * 0.1
