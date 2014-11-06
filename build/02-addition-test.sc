@@ -92,8 +92,8 @@ p = Pbindf(
 
 Ptpar([
 	0,p,
-	12 * 4, ~player3Penvir,
-	12 * 4 + 12 * 8, ~player4Penvir,
+	12 * 4 + 1, ~player3Penvir,
+	12 * 4 + 12 * 8 + 2, ~player4Penvir,
 ]).play;
 
 )
