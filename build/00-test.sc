@@ -40,23 +40,23 @@ g = f.rotate(1);
 h = f.rotate(2);
 
 Routine{
-	inf.do{|i|
-		if (f[i%f.size] ==1,{
-				n.play(h);
-		});
-		if (i>(12*4),{
-			if (g[i%g.size] ==1,{
-				n.play(y);
-			});
-		});
-		if (i>(12*8),{
-			if (h[i%h.size] ==1,{
-				n.play(k);
-			});
-		});
+    inf.do{|i|
+        if (f[i%f.size] ==1,{
+                n.play(h);
+        });
+        if (i>(12*4),{
+            if (g[i%g.size] ==1,{
+                n.play(y);
+            });
+        });
+        if (i>(12*8),{
+            if (h[i%h.size] ==1,{
+                n.play(k);
+            });
+        });
 
-		(0.15).wait;
-	}
+        (0.15).wait;
+    }
 
 }.play;
 

@@ -30,33 +30,33 @@ TempoClock.default.tempo = 400/60;
 // sounds
 
 createPlayer = {|seedPattern, offset, soundsArr, amp, pan|
-	var player,playerPattern;
-	player = player ? ();
-	player.playCount = 0;
-	player.seedPattern = seedPattern;
-	player.hitPositions = all{:y, y<-(0..(player.seedPattern.size)),player.seedPattern[y]== 1}.scramble;
-	player.currentAccumulatedPattern = 0 ! player.seedPattern.size;
+    var player,playerPattern;
+    player = player ? ();
+    player.playCount = 0;
+    player.seedPattern = seedPattern;
+    player.hitPositions = all{:y, y<-(0..(player.seedPattern.size)),player.seedPattern[y]== 1}.scramble;
+    player.currentAccumulatedPattern = 0 ! player.seedPattern.size;
 
-	playerPattern = Penvir(player,
-		Pbind(
-		\instrument, \pbf,
-		\dur, 1,
-		\rate, 0.8,
-		\bufnum, Pxrand(soundsArr,inf),
-		\pan, pan,
-		\amp, Pn(Plazy({
-			/*
-			Every 4 bars, we add a new note to the pattern until we have the 8 of them
-			*/
-			var currentIndex = ~hitPositions[~playCount];
-			~currentAccumulatedPattern[currentIndex] = ~seedPattern[currentIndex];
-			~currentAccumulatedPattern.postln;
-			~playCount = ~playCount + 1;
-			~playCount = ~playCount % ~hitPositions.size;
-			Pn(Pseq(~currentAccumulatedPattern,1),4);
-			}) * amp,inf);
-		)
-	);
+    playerPattern = Penvir(player,
+        Pbind(
+        \instrument, \pbf,
+        \dur, 1,
+        \rate, 0.8,
+        \bufnum, Pxrand(soundsArr,inf),
+        \pan, pan,
+        \amp, Pn(Plazy({
+            /*
+            Every 4 bars, we add a new note to the pattern until we have the 8 of them
+            */
+            var currentIndex = ~hitPositions[~playCount];
+            ~currentAccumulatedPattern[currentIndex] = ~seedPattern[currentIndex];
+            ~currentAccumulatedPattern.postln;
+            ~playCount = ~playCount + 1;
+            ~playCount = ~playCount % ~hitPositions.size;
+            Pn(Pseq(~currentAccumulatedPattern,1),4);
+            }) * amp,inf);
+        )
+    );
 };
 
 // ------------------------------------------------------------
@@ -70,8 +70,8 @@ f = currentPattern;
 
 p = Pbindf(
     ~basePbind,
-	\bufnum, Pxrand(sounds1,inf),
-	\rate, 1,
+    \bufnum, Pxrand(sounds1,inf),
+    \rate, 1,
     \pan, 0,
     \amp, Pseq(f,inf) * 0.1
 );
@@ -80,9 +80,9 @@ p = Pbindf(
 
 
 Ptpar([
-	0,p,
-	12 * 4 + 1, createPlayer.(currentPattern, 0, sounds2, 0.1, -0.5),
-	12 * 4 + 12 * 8 + 2, createPlayer.(currentPattern, 0, sounds3, 0.4, 0.5),
+    0,p,
+    12 * 4 + 1, createPlayer.(currentPattern, 0, sounds2, 0.1, -0.5),
+    12 * 4 + 12 * 8 + 2, createPlayer.(currentPattern, 0, sounds3, 0.4, 0.5),
 ]).play;
 
 )
